@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>writers' room</title>
+<link rel="stylesheet" href="/static/arena.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text y='26' font-size='26'>🥊</text></svg>">
+</head>
+<body>
+
+<header id="bar">
+  <h1>writers'&nbsp;room</h1>
+  <div id="phase" class="phase idle">idle</div>
+  <div class="spacer"></div>
+  <div class="readout" title="OpenRouter spend for this run">
+    <span id="cost">$0.0000</span><small id="calls">0 calls</small>
+  </div>
+  <div class="speeds">
+    <label for="speed" title="How long the fight holds on each beat">pace</label>
+    <input id="speed" type="range" min="0" max="100" step="1" value="50"
+           aria-label="playback pace" aria-valuetext="1.0 times">
+    <output id="speed-out" for="speed">1.0&times;</output>
+  </div>
+  <button id="sound" class="ghost" aria-pressed="true" title="hit sounds">🔊</button>
+  <button id="setup-toggle" class="ghost">setup</button>
+</header>
+
+<main>
+  <section id="stage">
+    <canvas id="arena"></canvas>
+    <div id="ticker"></div>
+  </section>
+
+  <aside id="side">
+    <nav class="tabs">
+      <button data-tab="feed" class="on">feed</button>
+      <button data-tab="board">scoreboard</button>
+      <button data-tab="text">drafts</button>
+    </nav>
+    <div id="feed" class="pane on"></div>
+    <div id="board" class="pane"></div>
+    <div id="text" class="pane"></div>
+  </aside>
+</main>
+
+<div id="setup" class="open">
+  <div class="setup-inner">
+    <div class="row">
+      <label>room
+        <select id="room"></select>
+      </label>
+      <label>rounds
+        <input id="rounds" type="number" min="1" max="4" value="1">
+      </label>
+      <label>seed
+        <input id="seed" type="number" placeholder="none">
+      </label>
+      <label class="check"><input id="blind" type="checkbox" checked> blind
+        <span class="hint">drafts anonymised behind letters</span>
+      </label>
+      <label class="check"><input id="exclude" type="checkbox"> no self-roast
+        <span class="hint">hide each panelist's own draft</span>
+      </label>
+    </div>
+
+    <div class="row">
+      <label class="grow">brief
+        <div class="brief-box">
+          <div id="brief-grip" class="grip" title="drag up to make the brief taller"></div>
+          <textarea id="brief" rows="9"></textarea>
+        </div>
+      </label>
+    </div>
+
+    <div class="row">
+      <label class="grow">panel
+        <div id="roster"></div>
+        <div class="adder">
+          <input id="model-input" autocomplete="off" spellcheck="false" role="combobox"
+                 aria-expanded="false" aria-controls="model-menu"
+                 placeholder="search models, or paste an id, e.g. anthropic/claude-opus-5">
+          <button id="add-model" class="ghost">add</button>
+          <div id="model-menu" class="mmenu" role="listbox" hidden></div>
+        </div>
+      </label>
+      <label class="judge-col">judge
+        <div class="picker">
+          <input id="judge" autocomplete="off" spellcheck="false" role="combobox"
+                 aria-expanded="false" aria-controls="judge-menu"
+                 placeholder="search, or no judge">
+          <div id="judge-menu" class="mmenu" role="listbox" hidden></div>
+        </div>
+      </label>
+    </div>
+
+    <div class="row actions">
+      <button id="start" class="primary">fight</button>
+      <button id="demo" class="ghost">demo (no key, no spend)</button>
+      <button id="stop" class="ghost" disabled>stop</button>
+      <label class="replay">replay
+        <select id="replay"><option value="">a past run</option></select>
+      </label>
+      <span id="status"></span>
+    </div>
+  </div>
+</div>
+
+<div id="drawer" hidden>
+  <div class="drawer-inner">
+    <button id="drawer-close" class="ghost">close</button>
+    <div id="drawer-body"></div>
+  </div>
+</div>
+
+<script src="/static/arena.js"></script>
+</body>
+</html>

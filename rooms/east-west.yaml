@@ -1,0 +1,40 @@
+# Does house style cluster by training culture? Three panelists trained in the
+# US, three in China, same brief, blind. Nobody is told the split exists, so if
+# it shows up in the rankings it shows up on its own.
+#
+# The judge is deliberately not on the panel. Blind mode mostly defuses a judge
+# scoring itself, but it costs almost nothing to remove the question entirely.
+name: east-west
+rounds: 1
+temperature: 0.95
+# Reasoning models spend this before writing anything visible. At 1200
+# both Opus and Gemini were truncated, and a truncated ballot changed
+# who won.
+max_tokens: 3000
+judge: z-ai/glm-4.6
+seed: 11
+
+# The same brief as claudese, deliberately. Two rooms that differ only in who is
+# on the panel are comparable; two that differ in the brief as well are not.
+brief: |
+  Write roughly 350 words for an academic audience on why agency theory explains
+  variation in capital structure. It should read like something a person would
+  actually want to finish.
+
+draft_system: |
+  Write the piece. Output the piece only: no preamble, no title card, no sign-off,
+  no meta-commentary about what you have written.
+
+panelists:
+  - model: anthropic/claude-opus-5
+    alias: Opus
+  - model: openai/gpt-5.6-terra
+    alias: GPT
+  - model: google/gemini-3.1-pro-preview
+    alias: Gemini
+  - model: deepseek/deepseek-v3.2
+    alias: DeepSeek
+  - model: qwen/qwen3-max
+    alias: Qwen
+  - model: moonshotai/kimi-k2-thinking
+    alias: Kimi

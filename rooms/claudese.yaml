@@ -1,0 +1,38 @@
+# The original experiment: give every model the same text, let them write in
+# their native register, then let them tear each other apart.
+name: claudese
+rounds: 1
+temperature: 0.95
+# Reasoning models spend this before writing anything visible. At 1200
+# both Opus and Gemini were truncated, and a truncated ballot changed
+# who won.
+max_tokens: 3000
+# The judge sits outside every family on the panel. Blind mode hides the names,
+# but anthropic/claude-sonnet-5 ranking a room that contains anthropic/claude-opus-5
+# is still one house marking its own homework, and the question is cheaper to
+# remove than to argue about. Same reasoning as east-west.
+judge: moonshotai/kimi-k3
+seed: 7
+
+brief: |
+  Write roughly 350 words for an academic audience on why agency theory explains
+  variation in capital structure. It should read like something a person would
+  actually want to finish.
+
+# Deliberately thin. The point is to expose each model's default voice, so do
+# not coach the prose here.
+draft_system: |
+  Write the piece. Output the piece only: no preamble, no title card, no sign-off,
+  no meta-commentary about what you have written.
+
+panelists:
+  - model: anthropic/claude-opus-5
+    alias: Opus
+  - model: openai/gpt-5.6-terra
+    alias: GPT
+  - model: google/gemini-3.1-pro-preview
+    alias: Gemini
+  - model: x-ai/grok-4.6
+    alias: Grok
+  - model: deepseek/deepseek-v3.2
+    alias: DeepSeek

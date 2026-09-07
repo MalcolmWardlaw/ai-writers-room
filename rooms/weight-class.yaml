@@ -1,0 +1,62 @@
+# Frontier models against the cheap seats, same brief, blind. Who wins is not
+# the question, since that is settled before the run starts. The question is
+# what the roast phase does with a gap that wide: whether a 1B model can say
+# anything specific about a Fable draft, and whether the frontier models can
+# tell the weak drafts apart from each other or just rank them last in a heap.
+#
+# A model that cannot return a parseable ballot has not broken the run. It
+# abstains: no Borda, no damage dealt, and judge_weight counts the ballots
+# actually cast rather than the nominal panel, so the arithmetic stays honest.
+# It is still read and ranked by everyone else. That asymmetry, a writer that
+# can be judged but cannot judge, is most of what this room is for.
+#
+# The judge sits outside every family on the panel, as in claudese and
+# east-west.
+name: weight-class
+rounds: 1
+temperature: 0.9
+# The roast packet is six drafts of about 350 words, so on the order of 4k
+# tokens in. The smallest model here carries 60k of context and 54k of output,
+# which is why these particular cheap models and not the cheaper ones below
+# them: low end is the point, running out of room halfway through is not.
+#
+# This is the expensive room. Projected from the token counts of a real
+# three-panelist run, six panelists and a judge come to about eighty cents,
+# against the thirty cents the README quotes for six frontier models. Two
+# thirds of that is Fable and Astra's output billing. Run it deliberately.
+max_tokens: 3000
+# Kimi judges: it sits outside every family on the panel, and it is the one
+# frontier model here that is not also fighting.
+judge: moonshotai/kimi-k3
+seed: 13
+
+# The same brief as claudese and east-west, so the three rooms differ only in
+# who is on the panel.
+brief: |
+  Write roughly 350 words for an academic audience on why agency theory explains
+  variation in capital structure. It should read like something a person would
+  actually want to finish.
+
+draft_system: |
+  Write the piece. Output the piece only: no preamble, no title card, no sign-off,
+  no meta-commentary about what you have written.
+
+panelists:
+  # The heavyweights: the current flagship from each of the four labs that
+  # actually trade places at the top, not their mid-tier siblings. Fable and
+  # Astra bill at $50 per Mtok of output, which is where the cost of this room
+  # comes from.
+  - model: anthropic/claude-fable-5.1
+    alias: Fable
+  - model: openai/gpt-6-astra
+    alias: Astra
+  - model: google/gemini-3.1-pro-preview
+    alias: Gemini
+  # the cheap seats, roughly two orders of magnitude cheaper per token, and one
+  # vendor each so the tier is not just one lab's small models talking to itself
+  - model: mistralai/mistral-nemo
+    alias: Nemo
+  - model: ibm-granite/granite-4.0-h-micro
+    alias: Granite
+  - model: meta-llama/llama-3.2-1b-instruct
+    alias: Llama1B

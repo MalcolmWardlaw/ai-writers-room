@@ -1,0 +1,22 @@
+runs/
+
+# Test output. tests/test_offline.py writes its run into whatever directory
+# you pass as its argument, and derives three more from that directory's
+# parent, so `uv run tests/test_offline.py tests/` scatters output into tests/
+# and drops out-named, out-ghost and out-leak beside it. Passing no argument
+# uses a tempdir and leaves the tree clean.
+out-*/
+tests/raw.json
+tests/transcript.md
+.env
+.key
+__pycache__/
+scratch/
+
+# Screenshots, and the meme sprites under static/img, which are third party
+# images with no clear licence. Whatever an operator drops in there stays on
+# their own machine. The placeholders under static/img/stub are our own work
+# and do ship, so a clone still runs. A trailing comment on the negation would
+# be read as part of the pattern, so keep these on their own lines.
+*.png
+!static/img/stub/*.png
